@@ -4,6 +4,7 @@ import MySQLdb
 import json
 import plivo
 import plivoxml
+import time
 
 auth_id = 'MANJVHMTE4ODRHODA3ND'
 auth_token = 'NGNiNjg5N2RlYzEwNmZjNTFhNzQ2NWFkNDY4OWE4'
@@ -96,7 +97,7 @@ def ivr():
 @app.route('/digit', methods=['GET','POST'])
 def digit():
     response = plivoxml.Response()
-  
+    time.sleep(2) 
     if request.method == 'POST':
         print 'Got a POST request'
     else:
