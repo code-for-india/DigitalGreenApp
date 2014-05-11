@@ -113,6 +113,7 @@ def digit():
             # Fetch a random joke using the Reddit API.
             response.addSpeak('Thank you for your interest in Digital Green')
             #sql = 'UPDATE farmersdata SET interested='+'"YES"' + 'WHERE phone='+'"f_number"'
+            print f_number
             sql = 'UPDATE farmersdata SET interested=\'YES\'  WHERE phone=\''+f_number+'\''
             #print sql
             #query = "UPDATE farmersdata SET interested=YES WHERE phone=" + f_number
