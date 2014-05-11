@@ -75,13 +75,67 @@ def make_call():
     return "<html><head><meta http-equiv='refresh' content='2;URL=\"http://fathomless-inlet-8852.herokuapp.com/list\"'></head><body><center><h2>Call is being made. Please wait while we connect you to the farmer</h2></center></body></html>"
     db.commit()
 
+@app.route('/getdigits/', methods=['GET', 'POST'])
+def getdigits():
+    if request.method == 'GET':
+        digits = request.args.get('Digits', '')
+    elif request.method == 'POST':
+        digits = request.form.get('Digits', '')
+    
+    resp = plivo.Response()
+    if digits:
+        if digits == '1':
+            text = u'This is a demo app'
+            resp.addSpeak(body=text, language='en-US')
+        elif digits == '2':
+            text = u'Dies ist eine Demo-Anwendung.'
+            resp.addSpeak(body=text, language='de-DE')
+        else:
+            text = u'Άγνωστη εισόδου'
+            resp.addSpeak(body=text, language='el-GR')
+    else:
+        resp.addSpeak('No input received')
+
+    ret_response = make_response(resp.to_xml())
+    ret_response.headers["Content-type"] = "text/xml"
+    return ret_response
+
+
 @app.route('/answer')
 def answer_url():
+    '''
     text = 'Hello, you have recently watched S R I technique videos'
     response = plivoxml.Response()
     params = {'loop':1,'language':"en-US", 'voice':'WOMAN'}
     response.addSpeak(text,**params)
     return Response(str(response), mimetype='text/xml')
+    '''
+    action = request.args.get('action', 'http://' + request.environ['SERVER_NAME'] + '/getdigits/')
+    method = request.args.get('method', 'GET')
+    timeout = request.args.get('timeout', '')
+    retries = request.args.get('retries', '')
+    finishonkey = request.args.get('finishOnKey', '')
+    numdigits = request.args.get('numDigits', 0)
+    validdigits = request.args.get('validDigits', '0123456789#*')
+    params = {'action': action, 'method': method}
+    if timeout:
+        params['timeout'] = timeout
+    if retries:
+        params['retries'] = retries
+    if finishonkey:
+        params['finishOnKey'] = finishonkey
+    if numdigits:
+        params['numDigits'] = numdigits
+    response = plivo.Response()
+    getdigits = plivo.GetDigits(**params)
+    getdigits.addSpeak(body="Press one for English.")
+    getdigits.addSpeak(body="Press two for German.")
+    response.add(getdigits)
+    response.addSpeak(body="Input not received. Thank you.")
+    ret_response = make_response(response.to_xml())
+    ret_response.headers["Content-type"] = "text/xml"
+    return ret_response
+
 
 if __name__ == "__main__":
     import os
