@@ -8,6 +8,7 @@ import time
 
 auth_id = 'MANJVHMTE4ODRHODA3ND'
 auth_token = 'NGNiNjg5N2RlYzEwNmZjNTFhNzQ2NWFkNDY4OWE4'
+f_number = ''
  
 app = Flask(__name__)
 
@@ -72,6 +73,7 @@ def addEntry():
 def make_call():
     p = plivo.RestAPI(auth_id,auth_token)
     params = {'from':'919242733911', 'to':request.args.get('key', '') , 'answer_url' : 'http://fathomless-inlet-8852.herokuapp.com/answer'}
+    f_number = request.args.get('key', '')
     response = p.make_call(params)
     return "<html><head><meta http-equiv='refresh' content='2;URL=\"http://fathomless-inlet-8852.herokuapp.com/list\"'></head><body><center><h2>Call is being made. Please wait while we connect you to the farmer</h2></center></body></html>"
     db.commit()
@@ -105,16 +107,23 @@ def digit():
         digit = request.form['Digits']
         print "The digit from phone"
         print digit
+        db=MySQLdb.connect("216.12.194.50","purvotar_root", "root1", "purvotar_cfi")
+        cur = db.cursor()
         if digit == "1":
             # Fetch a random joke using the Reddit API.
             response.addSpeak('Thank you for your interest in Digital Green')
+            query = "UPDATE farmersdata SET interested=YES WHERE phone=" + f_number
             print "Got the digit one"    
         elif digit == "2":
             # Listen to a song
             response.addSpeak('Thank you for the feedback')
+            query = "UPDATE farmersdata SET interested=NO WHERE phone=" + f_number
             print "Got the digit two"
         else:
             response.addSpeak("Sorry, it's wrong input.")
+            query = "UPDATE farmersdata SET interested=NO WHERE phone=" + f_number
+        cur.execute(query)
+        db.close()
     return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
