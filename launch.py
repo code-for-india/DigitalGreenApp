@@ -16,7 +16,7 @@ def HomePage():
 
 @app.route('/list')
 def ViewList():
-    db=MySQLdb.connect("localhost","root", "root", "cfi")
+    db=MySQLdb.connect("216.12.194.50","purvotar_root", "root1", "purvotar_cfi")
     cur = db.cursor()
     query = "SELECT * FROM farmersdata"
     cur.execute(query)
@@ -55,7 +55,7 @@ def addEntry():
     video_id = request.form['videoID']
     video_titles = request.form['videoTitles']
 
-    db=MySQLdb.connect("localhost","root", "root", "cfi")
+    db=MySQLdb.connect("216.12.194.50","purvotar_root", "root1", "purvotar_cfi")
     cur = db.cursor()
     sql = "INSERT INTO farmersdata(farmerid,name,villagename,phno,blockname) VALUES (null,'"+str(a)+"','"+str(b)+"','"+str(c)+"','"+str(d)+"')"
     try:
