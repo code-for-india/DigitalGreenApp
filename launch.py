@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, url_for
 from flaskext.mysql import MySQL
 import MySQLdb
 import json
@@ -76,13 +76,34 @@ def make_call():
     db.commit()
 
 @app.route('/answer')
-def answer_url():
+def ivr():
+    '''
     text = 'Hello, you have recently watched S R I technique videos'
     response = plivoxml.Response()
     params = {'loop':1,'language':"en-US", 'voice':'WOMAN'}
     response.addSpeak(text,**params)
     return Response(str(response), mimetype='text/xml')
-    
+    '''
+    response = plivoxml.Response()
+    if request.method == 'GET':
+        getdigits_action_url = url_for('ivr', _external=True)
+        getDigits = plivoxml.GetDigits(action=getdigits_action_url, method='POST',timeout=7, numDigits=1, retries=1)
+        getDigits.addSpeak("Welcome to the Plivo IVR Demo App. Press 1 to hear a random joke. Press 2 to listen to a song.")
+        response.add(getDigits)
+        response.addSpeak("Sorry, I didn't catch that. Please hangup and try again later.")
+        return Response(str(response), mimetype='text/xml')
+    elif request.method == 'POST':
+        digit = request.form.get('Digits')
+        if digit == "1":
+            # Fetch a random joke using the Reddit API.
+            print "Got the digit one"    
+        elif digit == "2":
+            # Listen to a song
+            print "Got the digit two"
+        else:
+            response.addSpeak("Sorry, it's wrong input.")
+        
+        return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
     import os
