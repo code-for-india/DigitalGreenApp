@@ -75,7 +75,7 @@ def make_call():
     return "<html><head><meta http-equiv='refresh' content='2;URL=\"http://fathomless-inlet-8852.herokuapp.com/list\"'></head><body><center><h2>Call is being made. Please wait while we connect you to the farmer</h2></center></body></html>"
     db.commit()
 
-@app.route('/answer')
+@app.route('/answer', methods=['GET','POST'])
 def ivr():
     '''
     text = 'Hello, you have recently watched S R I technique videos'
