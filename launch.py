@@ -107,27 +107,27 @@ def digit():
         digit = request.form['Digits']
         print "The digit from phone"
         print digit
-        db=MySQLdb.connect("216.12.194.50","purvotar_root", "root1", "purvotar_cfi")
-        cur = db.cursor()
+        #db=MySQLdb.connect("216.12.194.50","purvotar_root", "root1", "purvotar_cfi")
+        #cur = db.cursor()
         if digit == "1":
             # Fetch a random joke using the Reddit API.
             response.addSpeak('Thank you for your interest in Digital Green')
-            sql = 'UPDATE farmersdata SET interested='+'"YES"' + 'WHERE phone='+'f_number'
-            print sql
+            #sql = 'UPDATE farmersdata SET interested='+'"YES"' + 'WHERE phone='+'"f_number"'
+            #print sql
             #query = "UPDATE farmersdata SET interested=YES WHERE phone=" + f_number
             print "Got the digit one"    
         elif digit == "2":
             # Listen to a song
             response.addSpeak('Thank you for the feedback')
-            sql = 'UPDATE farmersdata SET interested='+'"NO"' + 'WHERE phone='+'f_number'
+            #sql = 'UPDATE farmersdata SET interested='+'"NO"' + 'WHERE phone='+'f_number'
             #query = "UPDATE farmersdata SET interested=NO WHERE phone=" + f_number
             print "Got the digit two"
         else:
             response.addSpeak("Sorry, it's wrong input.")
-            sql = 'UPDATE farmersdata SET interested='+'"NO"' + 'WHERE phone='+'f_number'
+            #sql = 'UPDATE farmersdata SET interested='+'"NO"' + 'WHERE phone='+'f_number'
             #query = "UPDATE farmersdata SET interested=NO WHERE phone=" + f_number
-        cur.execute(query)
-        db.close()
+        #cur.execute(query)
+        #db.close()
     return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
