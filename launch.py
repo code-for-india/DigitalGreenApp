@@ -101,7 +101,6 @@ def digit():
         print 'Got a POST request'
     else:
         print 'Got a GET request'    
-    '''
         digit = request.form.get('Digits')
         if digit == "1":
             # Fetch a random joke using the Reddit API.
@@ -111,7 +110,6 @@ def digit():
             print "Got the digit two"
         else:
             response.addSpeak("Sorry, it's wrong input.")
-    '''   
     return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
