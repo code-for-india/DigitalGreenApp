@@ -129,7 +129,7 @@ def digit():
             sql = 'UPDATE farmersdata SET interested=\'NO\'  WHERE phone=\''+f_number+'\''
             #sql = 'UPDATE farmersdata SET interested='+'"NO"' + 'WHERE phone='+'f_number'
             #query = "UPDATE farmersdata SET interested=NO WHERE phone=" + f_number
-        cur.execute(query)
+        cur.execute(sql)
         db.close()
     return Response(str(response), mimetype='text/xml')
 
