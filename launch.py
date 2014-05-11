@@ -88,7 +88,7 @@ def ivr():
     response = plivoxml.Response()
     if request.method == 'POST':
         getdigits_action_url = url_for('digit', _external=True)
-        getDigits = plivoxml.GetDigits(action=getdigits_action_url, method='GET',timeout=7, numDigits=1, retries=1)
+        getDigits = plivoxml.GetDigits(action=getdigits_action_url, method='POST',timeout=7, numDigits=1, retries=1)
         getDigits.addSpeak("You have recently watched S R I technique video. Did you express interest in this video. Press one for yes. Press two for no")
         response.add(getDigits)
         response.addSpeak("Sorry, I didn't catch that. Please hangup and try again later.")
@@ -98,11 +98,11 @@ def ivr():
 def digit():
     response = plivoxml.Response()
     time.sleep(2) 
-    if request.method == 'POST':
-        print 'Got a POST request'
+    if request.method == 'GET':
+        print 'Got a GET request'
     else:
-        print 'Got a GET request'    
-        digit = request.form.get('Digits', '')
+        print 'Got a POST request'    
+        digit = request.form['Digits']
         print "The digit from phone"
         print digit
         if digit == "1":
