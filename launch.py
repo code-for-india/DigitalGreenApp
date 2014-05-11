@@ -102,7 +102,7 @@ def digit():
         print 'Got a POST request'
     else:
         print 'Got a GET request'    
-        digit = request.form.get('Digits')
+        digit = request.form.get('Digits', '')
         print "The digit from phone"
         print digit
         if digit == "1":
