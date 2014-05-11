@@ -85,14 +85,14 @@ def ivr():
     return Response(str(response), mimetype='text/xml')
     '''
     response = plivoxml.Response()
-    if request.method == 'GET':
+    if request.method == 'POST':
         getdigits_action_url = url_for('ivr', _external=True)
         getDigits = plivoxml.GetDigits(action=getdigits_action_url, method='POST',timeout=7, numDigits=1, retries=1)
         getDigits.addSpeak("Welcome to the Plivo IVR Demo App. Press 1 to hear a random joke. Press 2 to listen to a song.")
         response.add(getDigits)
         response.addSpeak("Sorry, I didn't catch that. Please hangup and try again later.")
         return Response(str(response), mimetype='text/xml')
-    elif request.method == 'POST':
+    elif request.method == 'GET':
         digit = request.form.get('Digits')
         if digit == "1":
             # Fetch a random joke using the Reddit API.
