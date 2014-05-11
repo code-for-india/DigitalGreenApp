@@ -72,6 +72,8 @@ def make_call():
     p = plivo.RestAPI(auth_id,auth_token)
     params = {'from':'919242733911', 'to':request.args.get('key', '') , 'answer_url' : 'http://fathomless-inlet-8852.herokuapp.com/answer'}
     response = p.make_call(params)
+    return "<html><head><meta http-equiv='refresh' content='2;URL=\"http://fathomless-inlet-8852.herokuapp.com/\"'></head><body><center><h2>Call is being made. Please wait while we connect you to the farmer</h2></center></body></html>"
+    db.commit()
 
 @app.route('/answer')
 def answer_url():
