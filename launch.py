@@ -57,7 +57,7 @@ def addEntry():
 
     db=MySQLdb.connect("216.12.194.50","purvotar_root", "root1", "purvotar_cfi")
     cur = db.cursor()
-    sql = "INSERT INTO farmersdata(farmerid,name,villagename,phno,blockname) VALUES (null,'"+str(a)+"','"+str(b)+"','"+str(c)+"','"+str(d)+"')"
+    sql = "INSERT INTO farmersdata(farmerid,name,villagename,phone,blockname) VALUES (null,'"+str(a)+"','"+str(b)+"','"+str(c)+"','"+str(d)+"')"
     try:
         cur.execute(sql)
         db.commit()
@@ -65,12 +65,12 @@ def addEntry():
         db.rollback()
         print "Problem inserting a row"
     db.close()
-    return "<html><head><meta http-equiv='refresh' content='2;URL=\"http://0.0.0.0:5000/\"'></head><body><center><h2>New entry added</h2></center></body></html>"
+    return "<html><head><meta http-equiv='refresh' content='2;URL=\"http://fathomless-inlet-8852.herokuapp.com/\"'></head><body><center><h2>New entry added</h2></center></body></html>"
 
 @app.route('/call',methods=['GET'])
 def make_call():
     p = plivo.RestAPI(auth_id,auth_token)
-    params = {'from':'919242733911', 'to':request.args.get('key', '') , 'answer_url' : 'http://0.0.0.0:5000/answer'}
+    params = {'from':'919242733911', 'to':request.args.get('key', '') , 'answer_url' : 'http://fathomless-inlet-8852.herokuapp.com/answer'}
     response = p.make_call(params)
 
 @app.route('/answer')
