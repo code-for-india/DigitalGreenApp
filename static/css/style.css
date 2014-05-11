@@ -341,11 +341,6 @@
 					background: #f2f2f2;
 				}
 				
-				form textarea
-				{
-					min-height: 12em;
-				}
-
 				form .formerize-placeholder
 				{
 					color: #5a5959 !important;
