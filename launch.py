@@ -102,6 +102,8 @@ def digit():
     else:
         print 'Got a GET request'    
         digit = request.form.get('Digits')
+        print "The digit from phone"
+        print digit
         if digit == "1":
             # Fetch a random joke using the Reddit API.
             print "Got the digit one"    
