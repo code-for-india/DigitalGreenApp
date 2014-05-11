@@ -107,9 +107,11 @@ def digit():
         print digit
         if digit == "1":
             # Fetch a random joke using the Reddit API.
+            response.addSpeak('Thank you for your interest in Digital Green')
             print "Got the digit one"    
         elif digit == "2":
             # Listen to a song
+            response.addSpeak('Thank you for the feedback')
             print "Got the digit two"
         else:
             response.addSpeak("Sorry, it's wrong input.")
