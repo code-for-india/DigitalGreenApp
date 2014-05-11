@@ -86,13 +86,22 @@ def ivr():
     '''
     response = plivoxml.Response()
     if request.method == 'POST':
-        getdigits_action_url = url_for('ivr', _external=True)
+        getdigits_action_url = url_for('digit', _external=True)
         getDigits = plivoxml.GetDigits(action=getdigits_action_url, method='POST',timeout=7, numDigits=1, retries=1)
-        getDigits.addSpeak("Welcome to the Plivo IVR Demo App. Press 1 to hear a random joke. Press 2 to listen to a song.")
+        getDigits.addSpeak("You have recently watched S R I technique video. Did you express interest in this video. Press one for yes. Press two for no")
         response.add(getDigits)
         response.addSpeak("Sorry, I didn't catch that. Please hangup and try again later.")
         return Response(str(response), mimetype='text/xml')
-    elif request.method == 'GET':
+
+@app.route('/digit', methods=['GET','POST'])
+def digit():
+    response = plivoxml.Response()
+  
+    if request.method == 'POST':
+        print 'Got a POST request'
+    else:
+        print 'Got a GET request'    
+    '''
         digit = request.form.get('Digits')
         if digit == "1":
             # Fetch a random joke using the Reddit API.
@@ -102,8 +111,8 @@ def ivr():
             print "Got the digit two"
         else:
             response.addSpeak("Sorry, it's wrong input.")
-        
-        return Response(str(response), mimetype='text/xml')
+    '''   
+    return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
     import os
